@@ -8,15 +8,9 @@ pub fn main() !void {
     var part2: u32 = 0;
 
     while (lines.next()) |line| {
-        const direction = line[0];
-        const rotations = try std.fmt.parseInt(i32, line[1..], 10);
-
-        var next = current;
-        if (direction == 'L') {
-            next -= rotations;
-        } else {
-            next += rotations;
-        }
+        const direction: i32 = if (line[0] == 'L') -1 else 1;
+        const rotations = try std.fmt.parseInt(i32, line[1..], 10) * direction;
+        const next = current + rotations;
 
         part2 += @abs(next) / 100;
         if (next == 0 or (next < 0 and current != 0)) {

@@ -30,6 +30,8 @@ pub fn build(b: *std.Build) !void {
 
                 const input_path = b.pathJoin(&.{ data_dir, stem });
                 exe.root_module.addAnonymousImport("input", .{ .root_source_file = b.path(input_path) });
+                const example_path = b.pathJoin(&.{ data_dir, try std.fmt.allocPrint(b.allocator, "{s}_example", .{stem}) });
+                exe.root_module.addAnonymousImport("example", .{ .root_source_file = b.path(example_path) });
                 b.installArtifact(exe);
 
                 const run_cmd = b.addRunArtifact(exe);

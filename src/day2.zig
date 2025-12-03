@@ -23,7 +23,8 @@ pub fn main() !void {
         id_loop: for (id_0..id_n + 1) |id| {
             const digits = std.math.log10_int(id) + 1;
 
-            pattern_loop: for (2..digits + 1) |repeat_count| {
+            const primes: []const usize = &.{ 2, 3, 5, 7 };
+            pattern_loop: for (primes) |repeat_count| {
                 const pattern_len = digits / repeat_count;
                 if (digits % repeat_count != 0) continue;
 
@@ -32,10 +33,10 @@ pub fn main() !void {
 
                 if (a == 0) continue;
 
-                for (0..repeat_count - 1) |n| {
-                    const divisor = power * std.math.pow(usize, 10, n * pattern_len);
-                    const id_part = id / divisor;
-                    const b = id_part % power;
+                var t = id;
+                for (0..repeat_count - 1) |_| {
+                    t /= power;
+                    const b = t % power;
                     if (a != b) continue :pattern_loop;
                 }
 

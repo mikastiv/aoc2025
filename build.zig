@@ -44,6 +44,12 @@ pub fn build(b: *std.Build) !void {
                 const day_number = stem["day".len..];
                 const run_step = b.step(stem, try std.fmt.allocPrint(b.allocator, "Run day {s}", .{day_number}));
                 run_step.dependOn(&run_cmd.step);
+
+                const tests = b.addTest(.{ .root_module = exe.root_module });
+                const run_tests = b.addRunArtifact(tests);
+                const tests_name = try std.fmt.allocPrint(b.allocator, "{s}_test", .{stem});
+                const test_step = b.step(tests_name, try std.fmt.allocPrint(b.allocator, "Test day {s}", .{day_number}));
+                test_step.dependOn(&run_tests.step);
             },
             else => continue,
         }

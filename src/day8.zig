@@ -21,8 +21,7 @@ pub fn main() !void {
     var junction_boxes: std.ArrayList(Vec3) = .empty;
 
     while (lines.next()) |line| {
-        const l = std.mem.trim(u8, line, "\r");
-        var it = std.mem.tokenizeScalar(u8, l, ',');
+        var it = std.mem.tokenizeScalar(u8, line, ',');
         const x = try std.fmt.parseInt(i32, it.next().?, 10);
         const y = try std.fmt.parseInt(i32, it.next().?, 10);
         const z = try std.fmt.parseInt(i32, it.next().?, 10);
